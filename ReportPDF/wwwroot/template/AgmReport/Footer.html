@@ -1,0 +1,133 @@
+﻿<div class="col-sm-12 pdfBody"  style="border: 1px solid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <br>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="font-weight-bold">
+                        ส่วนของ SCG Cement Building Materials Co.,
+                        Ltd.
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <br>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">________________________</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">( {{SignatureSCGName}} )</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">{{SignatureSCGPosition}}</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">วันที่ ____________________</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <br>
+            </div>
+            {{WitnessSCG}}
+        </div>
+        <div class="col-sm-6" style="border-left: 1px solid #4D4F5C">
+            <div class="row">
+                <br>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="font-weight-bold"> ส่วนของคู่ค้า</span>
+                </div>
+            </div>
+            <div class="row">
+                <br>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">________________________</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">( {{SignatureVendorName}} )</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">ตำแหน่ง&nbsp;&nbsp;{{SignatureVendorPosition}}</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 text-center">
+                    <span class="font-weight-bold">วันที่ ____________________</span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <span class="font-weight-bold">ผู้มีอำนาจลงนามคู่ค้าพร้อมตราประทับ</span>
+                </div>
+            </div>
+            {{WitnessVendor}}
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 pdfBody" *ngIf="Page.AgmSignature" style="border-top: 1px solid">
+    <div class="row">
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-sm-6"><span class="font-weight-bold">คำจำกัดความ</span></div>
+        <div class="col-sm-6"><span class="font-weight-bold">การชำระ</span></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6"><span>* ยอดสั่งซื้อ = ยอดรับสินค้าจริง และมีการหัก C/N ของการคืนสินค้า</span></div>
+        <div class="col-sm-6"><span>* กรณีชำระเป็นเช็ค : ภายในวันที่กำหนดในใบแจ้งหนี้  หากไม่มาชำระให้หักบัญชี</span></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6"><span>* ยอดใบสั่งซื้อ = ยอดตามจำนวนสั่งซื้อในการเปิด P/O</span></div>
+        <div class="col-sm-6"><span>* กรณีหักบัญชี : หักจากงวดการจ่ายค่าสินค้าของแต่ละเดือน</span></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6"><span>* ยอดรับสินค้าจริง = ยอดสินค้าที่มีการรับ/ส่ง สินค้าจริงในแต่ละ P/O</span></div>
+    </div>
+    <div class="row">
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-sm-6"><span class="font-weight-bold">หมายเหตุ</span></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12"><span class="font-weight-bold" style="color:#0800FF">บริษัท เอสซีจี ซิเมนต์-ผลิตภัณฑ์ก่อสร้าง จำกัด เลขที่ 1 ถ.ปูนซิเมนต์ไทย แขวงวางซื่อ เขตบางซื่อ กทม. 10800</span></div>
+    </div>
+    <ng-container *ngFor="let row of Page.FooterSpacing;let j=index">
+        <div class="row" *ngIf="Page.AgmSignature">
+            <br>
+        </div>
+    </ng-container>
+</div>

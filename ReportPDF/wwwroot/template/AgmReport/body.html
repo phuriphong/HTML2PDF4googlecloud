@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+    <meta charset='utf-8'>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Sarabun&display=swap');
+        /*@font-face {
+            font-family: myFirstFont;
+            src: url('{{font}}') format('woff');
+        }*/
+    /*body { font-family: 'myFirstFont'}*/
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        .table2 {
+            border: 1px solid #dee2e6;
+        }
+
+            .table2 th {
+                padding-top: 0.1rem;
+                padding-bottom: 0.1rem;
+                border-bottom: 1px solid #dee2e6;
+            }
+
+        .tableReport {
+            padding: 0.3rem;
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+        }
+
+            .tableReport th {
+                font-weight: bold;
+            }
+
+            .tableReport th, .tableReport td {
+                padding: 0.3rem;
+                vertical-align: top;
+            }
+
+            .tableReport th {
+                border-bottom: 1px solid #dee2e6;
+            }
+
+        .table2 td {
+            padding: 0.3rem;
+            padding-top: 0.1rem;
+            padding-bottom: 0.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-sm-12 pdfBody">
+        <div class="row">
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label class="font-weight-bold">1.ข้อมูลของบริษัทผู้แทนจำหน่าย (Vendor Information)</label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2"><label class="font-weight-bold">ชื่อบริษัท</label></div>
+            <div class="col-sm-4">{{SupplierName}}</div>
+            <div class="col-sm-2"><label class="font-weight-bold">รหัสผู้ค้า</label></div>
+            <div class="col-sm-3">{{SupplierCode}}</div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2"><label class="font-weight-bold">ประเภทสินค้า</label></div>
+            <div class="col-sm-9 text-wrap">{{CatList}}</div>
+
+        </div>
+        {{AgmCredit}}
+        {{AgmRebate}}
+        {{AgmMarketingFee}}
+        {{AgmDCCharge}}
+        {{AgmDamage}}
+        {{AgmOther}}
+    </div>
+    {{Footer}}
+
+</body>
+</html>

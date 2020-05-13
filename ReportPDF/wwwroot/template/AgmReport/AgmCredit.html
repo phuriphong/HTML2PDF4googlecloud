@@ -1,0 +1,23 @@
+﻿<div class="row" >
+    <br>
+</div>
+
+<div class="row" *ngIf="Page.AgmSelectedTab.CreditFlag">
+    <div class="col-sm-12">
+        <label class="font-weight-bold">{{RecordNumber}}. ประมาณการเป้าหมาย (Target Plan)</label>
+    </div>
+
+</div>
+<div class="row" *ngIf="Page.AgmSelectedTab.CreditFlag">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2"><label class="font-weight-bold">ประจำปี</label></div>
+    <div class="col-sm-4">{{CreditYear}}</div>
+    <div class="col-sm-2"><label class="font-weight-bold">ระยะเวลา</label></div>
+    <div class="col-sm-3">{{CreditPeriodName}}</div>
+
+</div>
+<div class="row" *ngIf="Page.AgmCredit.length>0">
+    <div class="col-sm-12 text-center">
+        {{AgmCreditTable}}
+    </div>
+</div>  

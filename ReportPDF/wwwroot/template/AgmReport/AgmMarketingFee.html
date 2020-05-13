@@ -1,0 +1,59 @@
+﻿<div class="row">
+    <div class="col-sm-1 text-right">
+        {{RecordNumber}}.{{row.No}}
+    </div>
+    <div class="col-sm-11">
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="font-weight-bold"> คำอธิบาย</label>
+            </div>
+            <div class="col-sm-8">
+                <label style="word-wrap: break-word;"> {{row.Description}}</label>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-1 text-right">
+
+    </div>
+    <div class="col-sm-11">
+        <div class="row">
+            <div class="col-sm-2"><label class="font-weight-bold"> โดยคิดเป็น</label></div>
+            <div class="col-sm-2" >{{row.TargetAmount}}  {{row.Unit}}</div>
+            <div class="col-sm-2"><label class="font-weight-bold"> คำนวณจาก</label></div>
+            <div class="col-sm-2">{{row.CalByName}}</div>
+            <div class="col-sm-2"><label class="font-weight-bold"> จำนวน</label></div>
+            <div class="col-sm-2" >{{row.SupAmount}}  {{row.Unit}}</div>
+
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-1 text-right">
+
+    </div>
+    <div class="col-sm-11">
+        <div class="row">
+            <div class="col-sm-4"><label class="font-weight-bold"> ช่วงเวลาในการจ่ายชำระ-ผลประโยชน์</label></div>
+            <div class="col-sm-6">{{row.PeriodName}}</div>
+
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-1 text-right">
+
+    </div>
+    <div class="col-sm-11">
+        <div class="row">
+            <div class="col-sm-4"><label class="font-weight-bold"> วิธีการจ่ายชำระ-ผลประโยชน์</label></div>
+            <div class="col-sm-6">{{row.PaymentMethodName}}</div>
+
+        </div>
+
+    </div>
+</div>

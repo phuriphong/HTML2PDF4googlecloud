@@ -1,0 +1,48 @@
+﻿
+
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2"><label class="font-weight-bold">{{row1}}</label></div>
+    <div class="col-sm-4">{{row2}} </div>
+    <div class="col-sm-2"><label class="font-weight-bold">คำนวณจาก</label></div>
+    <div class="col-sm-3">{{CalByName}}</div>
+
+</div>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"><label class="font-weight-bold">กลุ่มสินค้า</label></div>
+    <div class="col-sm-6">
+        <table class="tableReport" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text-center" scope="col">#</th>
+                    <th scope="col">Item Category</th>
+                    <th scope="col">Sub Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{Subitem}}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <br>
+</div>
+{{AgmRebateStep}}
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4"><label class="font-weight-bold">ช่วงเวลาในการจ่ายชำระ-ผลประโยชน์</label></div>
+    <div class="col-sm-3">{{PeriodName}}</div>
+
+</div>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4"><label class="font-weight-bold">วิธีการจ่ายชำระ-ผลประโยชน์</label></div>
+    <div class="col-sm-3">{{PaymentMethodName}}</div>
+
+</div>
+<div class="row">
+    <br>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -271,6 +272,13 @@ namespace SCGEpur.Models
         public string StatusBorderColor { get; set; }
         public string StatusFontColor { get; set; }
         public int? StatusFontSize { get; set; }
+    }
+    public class restmodel {
+        public string Url { get; set; }
+        public Method Method { get; set; }
+        public string Output { get; set; }
+        public string Data { get; set; }
+        public string Code { get;  set; }
     }
         public class AgmDCCharge_Result
     {

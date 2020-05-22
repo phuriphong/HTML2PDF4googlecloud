@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using IronPdf;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using RestSharp;
 using SCGEpur.Models;
 
 namespace ReportPDF.Controllers
@@ -16,7 +20,8 @@ namespace ReportPDF.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
-        public SampleDataController(IHostingEnvironment env) {
+        public SampleDataController(IHostingEnvironment env)
+        {
             _env = env;
 
         }
@@ -36,6 +41,16 @@ namespace ReportPDF.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Language()
+        {
+            IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
+            Renderer.PrintOptions.InputEncoding = System.Text.Encoding.UTF8;
+            var PDF = Renderer.RenderUrlAsPdf("https://en.wikipedia.org/wiki/Arabic");
+            byte[] data = PDF.BinaryData;
+
+            return await Task.Run(async () => File(data, "application/pdf"));
         }
         [HttpGet("[action]")]
         public async Task<IActionResult> sssAsync()
@@ -64,7 +79,7 @@ namespace ReportPDF.Controllers
 
             Renderer.PrintOptions.CustomCssUrl = "https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css";
 
-             
+
             StringBuilder head = new StringBuilder(System.IO.File.ReadAllText(Path.Combine(Mappath, "header.html")));
             var json = System.IO.File.ReadAllText(Path.Combine(Mappath, "data.json"));
             AgmHeader_Result H = (AgmHeader_Result)JsonConvert.DeserializeObject(json, typeof(AgmHeader_Result));
@@ -253,7 +268,8 @@ namespace ReportPDF.Controllers
                 {
                     body.Replace("{{AgmRebate}}", "");
                 }
-                if (H.AgmSelectedTab.MarketingFeeFlag) {
+                if (H.AgmSelectedTab.MarketingFeeFlag)
+                {
                     var AgmMarketingFee = new StringBuilder(
                         @"
                    <div class='row' >
@@ -322,7 +338,7 @@ namespace ReportPDF.Controllers
                 }
                 StringBuilder ListOther = new StringBuilder();
                 if (H.AgmSelectedTab.CustomizeFlag || H.AgmSelectedTab.NewStoreFlag
-                    || H.AgmSelectedTab.NewProductFlag|| H.AgmSelectedTab.CreditTermFlag)
+                    || H.AgmSelectedTab.NewProductFlag || H.AgmSelectedTab.CreditTermFlag)
                 {
                     if (H.AgmSelectedTab.CustomizeFlag)
                     {
@@ -369,7 +385,7 @@ namespace ReportPDF.Controllers
                             ListOther.Append(CustomizeTem.ToString());
                         }
                     }
-                    if (H.AgmSelectedTab.NewProductFlag|| H.AgmSelectedTab.CreditTermFlag || H.AgmSelectedTab.NewStoreFlag)
+                    if (H.AgmSelectedTab.NewProductFlag || H.AgmSelectedTab.CreditTermFlag || H.AgmSelectedTab.NewStoreFlag)
                     {
                         foreach (var item in H.AgmOther.Where(x => x.OtherType != "Customize"))
                         {
@@ -486,10 +502,10 @@ namespace ReportPDF.Controllers
                                 default:
                                     break;
                             }
-                            
+
                             otherTem.Replace("{{RecordNumber}}", (++RecordNumber).ToString());
                             otherTem.Replace("{{CalByName}}", item.CalByName);
-                            otherTem.Replace("{{OldCreditTerm}}",string.Format("{0:#,##0}",item.OldCreditTerm));
+                            otherTem.Replace("{{OldCreditTerm}}", string.Format("{0:#,##0}", item.OldCreditTerm));
                             otherTem.Replace("{{NewCreditTerm}}", string.Format("{0:#,##0}", item.NewCreditTerm));
                             otherTem.Replace("{{Unit}}", item.Unit);
                             otherTem.Replace("{{Description}}", item.Description);
@@ -514,7 +530,7 @@ namespace ReportPDF.Controllers
                 Footer.Replace("{{SignatureVendorPosition}}", AgmSignatureVendor.Position);
 
                 StringBuilder ListWitness = new StringBuilder();
-                foreach (var item in H.AgmSignature.Where(x=>x.VendorFlag&& x.SignatureType != Signer))
+                foreach (var item in H.AgmSignature.Where(x => x.VendorFlag && x.SignatureType != Signer))
                 {
 
                     var s = new StringBuilder(@" <div class='row'>
@@ -599,7 +615,7 @@ namespace ReportPDF.Controllers
                 }
                 Footer.Replace("{{WitnessVendor}}", ListWitness.ToString());
                 body.Replace("{{Footer}}", Footer.ToString());
-                
+
             }
             var PDF = Renderer.RenderHtmlAsPdf(body.ToString());
             //var  = Renderer.RenderHtmlAsPdf("<div class='container-fluid'> <div class='row'> <div class='col-md-12'> <nav class='navbar navbar-expand-lg navbar-light bg-light'> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1'> <span class='navbar-toggler-icon'></span> </button> <a class='navbar-brand' href='#'>Brand</a> <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'> <ul class='navbar-nav'> <li class='nav-item active'> <a class='nav-link' href='#'>Link<span class='sr-only'>(current)</span></a> </li> <li class='nav-item'> <a class='nav-link' href='#'>Link</a> </li> <li class='nav-item dropdown'> <a class='nav-link dropdown-toggle' href='http://example.com' id='navbarDropdownMenuLink' data-toggle='dropdown'>Dropdown link</a> <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> <div class='dropdown-divider'> </div> <a class='dropdown-item' href='#'>Separated link</a> </div> </li> </ul> <form class='form-inline'> <input class='form-control mr-sm-2' type='text' /> <button class='btn btn-primary my-2 my-sm-0' type='submit'> Search </button> </form> <ul class='navbar-nav ml-md-auto'> <li class='nav-item active'> <a class='nav-link' href='#'>Link<span class='sr-only'>(current)</span></a> </li> <li class='nav-item dropdown'> <a class='nav-link dropdown-toggle' href='http://example.com' id='navbarDropdownMenuLink' data-toggle='dropdown'>Dropdown link</a> <div class='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdownMenuLink'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> <div class='dropdown-divider'> </div> <a class='dropdown-item' href='#'>Separated link</a> </div> </li> </ul> </div> </nav> <div class='jumbotron'> <h2> Hello, world! </h2> <p> This is a template for a simple marketing or informational website.It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique. </p> <p> <a class='btn btn-primary btn-large' href='#'>Learn more</a> </p> </div> </div> </div> <div class='row'> <div class='col-md-4'> <h2> Heading </h2> <p> Donec id elit non mi porta gravida at eget metus.Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.Etiam porta sem malesuada magna mollis euismod.Donec sed odio dui. </p> <p> <a class='btn' href='#'>View details »</a> </p> </div> <div class='col-md-4'> <h2> Heading </h2> <p> Donec id elit non mi porta gravida at eget metus.Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.Etiam porta sem malesuada magna mollis euismod.Donec sed odio dui. </p> <p> <a class='btn' href='#'>View details »</a> </p> </div> <div class='col-md-4'> <h2> Heading </h2> <p> Donec id elit non mi porta gravida at eget metus.Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.Etiam porta sem malesuada magna mollis euismod.Donec sed odio dui. </p> <p> <a class='btn' href='#'>View details »</a> </p> </div> </div> </div>");
@@ -615,12 +631,118 @@ namespace ReportPDF.Controllers
             return await Task.Run(async () => File(data, "application/pdf"));
         }
         [HttpGet("[action]")]
-        public  FileResult angsa() {
-            
+        public async Task<ActionResult> contractAsync()
+        {
+            try
+            {
+                //string Mappath = Path.Combine(_env.WebRootPath, "template", "AgmReport");
+                //StringBuilder head = new StringBuilder(System.IO.File.ReadAllText(Path.Combine(Mappath, "contract.html")));
+
+                StringBuilder head = new StringBuilder("<span>1</span>");
+                HiQPdf.HtmlToPdf htmlToPdfConverter = new HiQPdf.HtmlToPdf();
+
+                var doc = htmlToPdfConverter.Document;
+                var magin = new HiQPdf.PdfMargins();
+                magin.Top = 20;
+                magin.Left = 20;
+                magin.Right = 20;
+                magin.Bottom = 30;
+                htmlToPdfConverter.Document.Margins = magin;  //millimeters
+              //  string baseUrl = string.Concat(Request.Scheme, "://", Request.Host);
+                byte[] data = htmlToPdfConverter.ConvertHtmlToMemory(head.ToString(), null);
+
+
+
+                return await Task.Run(async () => File(data, "application/pdf"));
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { IsDone = false, ex.Message, ex });
+            }
+
+
+        }
+        [HttpGet("[action]")]
+        public FileResult angsa()
+        {
+
             string Mappath = Path.Combine(_env.WebRootPath, "template", "AgmReport");
             var fileBytes = (System.IO.File.ReadAllBytes(Path.Combine(Mappath, "angsa.woff")));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "angsa.woff");
         }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CallApi([FromBody]restmodel model)
+        {
+            try
+            {
+                var client =   new  RestClient(model.Url);
+                var request =  new RestRequest(model.Method);
+                request.AddParameter("application/x-www-form-urlencoded", model.Data, ParameterType.RequestBody);
+                IRestResponse response = await client.ExecuteAsync(request);
+                {
+                    return  Ok(new { response.Content, response = response.ErrorException == null ? "" : response.ErrorException.Message, response.ErrorMessage });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { IsDone = false, ex.Message, ex });
+            }
+
+
+        }
+
+        [HttpPost("AB/[action]")]
+        public ActionResult tttt([FromBody]restmodel model)
+        {
+            try
+            {
+                var client = new RestClient(model.Url);
+                var request = new RestRequest(model.Method);
+                var body = model.Data;
+                request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
+                IRestResponse response =  client.Execute(request);
+                {
+                    return Ok(new { response.Content, response = response.ErrorException == null ? "" : response.ErrorException.Message, response.ErrorMessage });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { IsDone = false, ex.Message, ex });
+            }
+
+
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> PostData([FromBody]restmodel model)
+        {
+            try
+            {
+                var dict = new Dictionary<string, string>();
+                dict.Add("grant_type", "authorization_code");
+                dict.Add("client_id", "039bb643-891d-4abd-846d-a38c2e89adad");
+                dict.Add("redirect_uri", "https://test-scgdistpurchasing.nexterdigitals-dev.com/login");
+                dict.Add("code", model.Code);
+                var client = new HttpClient();
+                var req = new HttpRequestMessage(HttpMethod.Post, model.Url) { Content = new FormUrlEncodedContent(dict) };
+                var res = await client.SendAsync(req);
+                return Ok(res.Content.ReadAsStringAsync().Result);
+            }
+            catch (WebException we)
+            {
+                throw new Exception(we.Message);
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { IsDone = false, ex.Message });
+            }
+
+
+        }
+
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

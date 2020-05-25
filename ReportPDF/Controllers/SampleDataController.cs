@@ -635,23 +635,23 @@ namespace ReportPDF.Controllers
         {
             try
             {
-                //string Mappath = Path.Combine(_env.WebRootPath, "template", "AgmReport");
-                //StringBuilder head = new StringBuilder(System.IO.File.ReadAllText(Path.Combine(Mappath, "contract.html")));
+                string Mappath = Path.Combine(_env.WebRootPath, "template", "AgmReport");
+                StringBuilder head = new StringBuilder(System.IO.File.ReadAllText(Path.Combine(Mappath, "contract.html")));
 
-                StringBuilder head = new StringBuilder("<span>1</span>");
-                HiQPdf.HtmlToPdf htmlToPdfConverter = new HiQPdf.HtmlToPdf();
+                //StringBuilder head = new StringBuilder("<span>1</span>");
+                //HiQPdf.HtmlToPdf htmlToPdfConverter = new HiQPdf.HtmlToPdf();
 
-                var doc = htmlToPdfConverter.Document;
-                var magin = new HiQPdf.PdfMargins();
-                magin.Top = 20;
-                magin.Left = 20;
-                magin.Right = 20;
-                magin.Bottom = 30;
-                htmlToPdfConverter.Document.Margins = magin;  //millimeters
-              //  string baseUrl = string.Concat(Request.Scheme, "://", Request.Host);
-                byte[] data = htmlToPdfConverter.ConvertHtmlToMemory(head.ToString(), null);
+                //var doc = htmlToPdfConverter.Document;
+                //var magin = new HiQPdf.PdfMargins();
+                //magin.Top = 20;
+                //magin.Left = 20;
+                //magin.Right = 20;
+                //magin.Bottom = 30;
+                //htmlToPdfConverter.Document.Margins = magin;  //millimeters
+                //                                              //  string baseUrl = string.Concat(Request.Scheme, "://", Request.Host);
+                //byte[] data = htmlToPdfConverter.ConvertHtmlToMemory(head.ToString(), null);
 
-
+                byte[] data = new ReportPDF.Model.ExpertPdf().pdf(head);
 
                 return await Task.Run(async () => File(data, "application/pdf"));
             }
@@ -675,18 +675,18 @@ namespace ReportPDF.Controllers
         {
             try
             {
-                var client =   new  RestClient(model.Url);
-                var request =  new RestRequest(model.Method);
+                var client = new RestClient(model.Url);
+                var request = new RestRequest(model.Method);
                 request.AddParameter("application/x-www-form-urlencoded", model.Data, ParameterType.RequestBody);
                 IRestResponse response = await client.ExecuteAsync(request);
                 {
-                    return  Ok(new { response.Content, response = response.ErrorException == null ? "" : response.ErrorException.Message, response.ErrorMessage });
+                    return Ok(new { response.Content, response = response });
                 }
 
             }
             catch (Exception ex)
             {
-                return Ok(new { IsDone = false, ex.Message, ex });
+                return Ok(new { IsDone = false, ex });
             }
 
 
@@ -701,15 +701,15 @@ namespace ReportPDF.Controllers
                 var request = new RestRequest(model.Method);
                 var body = model.Data;
                 request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
-                IRestResponse response =  client.Execute(request);
+                IRestResponse response = client.Execute(request);
                 {
-                    return Ok(new { response.Content, response = response.ErrorException == null ? "" : response.ErrorException.Message, response.ErrorMessage });
+                    return Ok(new { response.Content, response = response });
                 }
 
             }
             catch (Exception ex)
             {
-                return Ok(new { IsDone = false, ex.Message, ex });
+                return Ok(new { IsDone = false, ex });
             }
 
 
@@ -736,7 +736,7 @@ namespace ReportPDF.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new { IsDone = false, ex.Message });
+                return Ok(new { IsDone = false, ex });
             }
 
 

@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExpertPdf.HtmlToPdf.NetCore" Version="15.0.0" />
     <PackageReference Include="HiQPdf_NetCore" Version="11.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -27,6 +28,11 @@
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Model\ABCpdf.cs" />
+    <Compile Remove="Model\PdfGenerator.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,10 +69,6 @@
     <Content Update="wwwroot\template\AgmReport\header.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -107,5 +109,13 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <ItemGroup>
+    <NativeLibs Remove="Model\PdfGenerator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="Model\ExpertPdf.cs" />
+  </ItemGroup>
 
 </Project>
